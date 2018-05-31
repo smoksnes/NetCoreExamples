@@ -1,0 +1,17 @@
+﻿@model ExampleProject.Controllers.ExampleModel
+@{
+    ViewData["Title"] = "Home Page";    
+}
+
+
+<a asp-area="" asp-controller="Home" asp-action="Contact">Contact</a>
+
+<label asp-for="Name"></label>
+<input asp-for="Name"></input>
+
+<environment include="Development">
+    <h1>DEV!</h1>
+</environment>
+<environment exclude="Development">
+    <h1>INTE DEV!</h1>
+</environment>
