@@ -21,10 +21,10 @@ namespace ExampleProject
 			// Krävs för att UseMvc() Ska fungera.
 	        services.AddMvc(); // Decompila och visa vad den innehåller
 
-			// AutoMapper.Extensions.Microsoft.DependencyInjection
+	        // AutoMapper.Extensions.Microsoft.DependencyInjection
 	        services.AddAutoMapper();
 
-	        services.AddSwaggerGen(c =>
+			services.AddSwaggerGen(c =>
 	        {
 		        c.SwaggerDoc("v1", new Info { Title = "My API", Version = "v1" });
 	        });
@@ -46,14 +46,14 @@ namespace ExampleProject
 
 	        var builder = new ConfigurationBuilder()
 		        .SetBasePath(Directory.GetCurrentDirectory())
+		        .AddJsonFile("appsettings.json")
 		        .AddJsonFile($"appsettings.{Environment.UserName}.json", optional: true)
 		        .AddEnvironmentVariables()
-		        .AddUserSecrets<Startup>()
-				.AddJsonFile("appsettings.json");
+		        .AddUserSecrets<Startup>();
 
 	        Configuration = builder.Build();
 
-			// Link in code compiles. But why?
+			// Link in code compiles. But why? :)
 			https://docs.microsoft.com/en-us/aspnet/core/fundamentals/middleware/?view=aspnetcore-2.0&tabs=aspnetcore2x
 
 			//app.Run(async (context) =>
@@ -69,7 +69,12 @@ namespace ExampleProject
 			});
 
 			app.UseStaticFiles();
-			app.UseSwagger();
+
+	        app.UseSwagger();
+			app.UseSwaggerUI(c =>
+	        {
+		        c.SwaggerEndpoint("/swagger/v1/swagger.json", "My API V1");
+	        });
 
 			//app.UseMvc();
 		}

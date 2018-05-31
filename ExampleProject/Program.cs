@@ -33,8 +33,10 @@ namespace ExampleProject
 		}
 
 		public static IWebHost BuildWebHost(string[] args) =>
-            WebHost.CreateDefaultBuilder(args) // Sätter själv upp loggning.
-                .UseStartup<Startup>()
+				new WebHostBuilder()
+				//WebHost.CreateDefaultBuilder(args) // Sätter själv upp loggning.
+				.UseContentRoot(Directory.GetCurrentDirectory())
+				.UseStartup<Startup>()
 	            .UseKestrel() // Behövs inte.
 				.ConfigureLogging((hostingContext, logging) =>
 	            {
